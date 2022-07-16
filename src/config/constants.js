@@ -3,7 +3,7 @@ const CONSTANTES = Object.freeze({
         "UNO": 1,
         "DOS": 2,
     },
-    "URL_API": "http://deckofcardsapi.com/api/deck",
+    "URL_API": "https://deckofcardsapi.com/api/deck",
 });
 
 const MagicNumber = Object.freeze({
