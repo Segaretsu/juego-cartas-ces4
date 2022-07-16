@@ -63,18 +63,9 @@ const PartidaProvider = ({ children }) => {
         parejasEncontradas = parejasEncontradas.filter(Boolean);
         // Validamos si ganaron más de un jugador a la vez, para desempatar.
         if (parejasEncontradas.length == 1) {
-            unicoGanador(parejasEncontradas);
+            setMazoGanador(parejasEncontradas[MagicNumber.CERO]);
         } else if (parejasEncontradas.length > 1) {
             empate(parejasEncontradas);
-        }
-    }
-
-    function unicoGanador(parejasEncontradas) {
-        for (let index = 0; index < parejasEncontradas.length; index++) {
-            const pareja = parejasEncontradas[index];
-            if (pareja?.hasPareja) {
-                setMazoGanador(pareja);
-            }
         }
     }
 
