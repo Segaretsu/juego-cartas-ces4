@@ -105,7 +105,7 @@ const PartidaProvider = ({ children }) => {
     }
 
     function getSuitValue(suit) {
-        //suit > número es mayot
+        //suit > número es mayor
         // 4. "HEARTS"
         // 3. "SPADES"
         // 2. "DIAMONDS"

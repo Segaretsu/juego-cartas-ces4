@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import usePartida from "../context/usePartida";
 import { useNavigate } from 'react-router-dom';
-import { Grid, Stack, Button, Icon, Typography } from "@mui/material";
+import { Grid, Button, Icon, Typography } from "@mui/material";
 
 const Juego = () => {
 
@@ -12,12 +11,6 @@ const Juego = () => {
     const handledJuego = () => {
         pedirCartas();
     }
-
-    useEffect(() => {
-        if (mazoGanador?.jugador) {
-            // alert("El ganador es el jugador: " + mazoGanador.jugador);
-        }
-    }, [mazoGanador]);
 
     function getIcon(nombreJugador) {
         if (mazoGanador?.jugador) {

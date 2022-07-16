@@ -2,7 +2,7 @@ import { MagicNumber } from "../config/constants";
 import usePartida from "../context/usePartida";
 import InputJugador from "../hooks/InputJugador";
 import { useNavigate } from 'react-router-dom';
-import { Grid, Stack, Button } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 
 
 const InicioPartida = () => {
