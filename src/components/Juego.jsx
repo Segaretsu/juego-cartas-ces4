@@ -1,15 +1,23 @@
 import usePartida from "../context/usePartida";
 import { useNavigate } from 'react-router-dom';
 import { Grid, Button, Icon, Typography } from "@mui/material";
+import { useState } from "react";
 
 const Juego = () => {
 
     const { jugadores, pedirCartas, mazoGanador, reiniciarJuego } = usePartida();
 
+    const [disabledButton, setDisabledButton] = useState(false);
+
     const navigate = useNavigate();
 
-    const handledJuego = () => {
-        pedirCartas();
+    const handledJuego = async () => {
+        if (disabledButton) {
+            return;
+        }
+        setDisabledButton(true);
+        await pedirCartas();
+        setDisabledButton(false);
     }
 
     function getIcon(nombreJugador) {
@@ -31,7 +39,7 @@ const Juego = () => {
         <>
             {!mazoGanador?.jugador && <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2}>
                 <Grid item>
-                    <Button onClick={handledJuego} variant="contained"><Icon>play_arrow</Icon></Button>
+                    <Button onClick={handledJuego} variant="contained" disabled={disabledButton}><Icon>play_arrow</Icon></Button>
                 </Grid>
             </Grid>}
             <Grid container direction="column" justifyContent="center" alignItems="center" spacing={2}>

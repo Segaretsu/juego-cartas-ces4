@@ -4,9 +4,9 @@ import DeckofcardsapiService from "../services/deckofcardsapi.service";
 import { PartidaContext } from "./PartidaContext";
 
 const PartidaProvider = ({ children }) => {
-    const [jugadores, setJugadores] = useState([]);
-    const [mazoGanador, setMazoGanador] = useState({});
-    const [idPartida, setIdPartida] = useState("");
+    const [jugadores, setJugadores] = useState(() => JSON.parse(window.localStorage.getItem("jugadores")) || []);
+    const [mazoGanador, setMazoGanador] = useState(() => JSON.parse(window.localStorage.getItem("mazoGanador")) || {});
+    const [idPartida, setIdPartida] = useState(() => window.localStorage.getItem("idPartida") || "");
 
     const handledNombreJugador = (numeroJugador, nombre) => {
         const pos = numeroJugador - 1;
@@ -28,6 +28,7 @@ const PartidaProvider = ({ children }) => {
             jugadoresPartida.push(jugador);
         }
         setJugadores([...jugadoresPartida]);
+        setLocalStorage(id, jugadoresPartida);
     }
 
     const pedirCartas = async () => {
@@ -64,8 +65,11 @@ const PartidaProvider = ({ children }) => {
         // Validamos si ganaron más de un jugador a la vez, para desempatar.
         if (parejasEncontradas.length == 1) {
             setMazoGanador(parejasEncontradas[MagicNumber.CERO]);
+            setLocalStorage(idPartida, jugadoresPartida, parejasEncontradas[MagicNumber.CERO]);
         } else if (parejasEncontradas.length > 1) {
             empate(parejasEncontradas);
+        } else {
+            setLocalStorage(idPartida, jugadoresPartida);
         }
     }
 
@@ -89,6 +93,7 @@ const PartidaProvider = ({ children }) => {
             }
         }
         setMazoGanador(ganador);
+        setLocalStorage(idPartida, jugadores, ganador);
     }
 
     function valorMazo(carta1, carta2) {
@@ -119,6 +124,19 @@ const PartidaProvider = ({ children }) => {
         setJugadores([]);
         setMazoGanador({});
         setIdPartida("");
+        deleteSessionStorage();
+    }
+
+    function setLocalStorage (id = idPartida, participantes = jugadores, mazoVictoria = mazoGanador) {
+        window.localStorage.setItem("jugadores", JSON.stringify(participantes));
+        window.localStorage.setItem("mazoGanador", JSON.stringify(mazoVictoria));
+        window.localStorage.setItem("idPartida", id);
+    }
+
+    function deleteSessionStorage() {
+        window.localStorage.removeItem("jugadores");
+        window.localStorage.removeItem("mazoGanador");
+        window.localStorage.removeItem("idPartida");
     }
 
     return (
